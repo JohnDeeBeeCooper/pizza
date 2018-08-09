@@ -5,6 +5,7 @@
   "dependencies": {
     "immutability-helper": "^2.7.1",
     "konva": "^2.1.8",
+    "randomcolor": "^0.5.3",
     "react": "^16.4.2",
     "react-dom": "^16.4.1",
     "react-konva": "^1.7.12",

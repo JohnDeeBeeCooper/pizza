@@ -3,23 +3,25 @@ import { Wedge, Text, Group } from 'react-konva';
 
 export default (props) => {
     const param = props.param;
-    const x = 150;
-    const y = 150;
+    const x = props.wh.width/2;
+    const y = props.wh.height/2;
     const wedgeParametres = {
         x: x,
         y: y,
-        radius: 130,
+        radius: 250,
         angle: param.angle,
-        fill: 'red',
+        fill: param.color,
         stroke: 'black',
-        strokeWidth: 2,
+        strokeWidth: 5,
         rotation: param.rotation,
     }
     const textParametres = {
         x: x,
         y: y,
-        rotation: param.rotation,
-        text: param.value
+        rotation: param.rotation + param.angle / 2,
+        text: param.value,
+        fontFamily: 'Arial',
+        fontSize: 18
     }
     return (
         <Group>

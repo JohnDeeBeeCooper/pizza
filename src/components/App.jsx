@@ -4,21 +4,25 @@ import { Items, Button } from './Items';
 import randomSelect from '../functions/random';
 import Spinner from './Spinner'
 import styled from 'styled-components';
+import randomColor from 'randomcolor';
 
 export default class App extends Component {
   state = {
-    choice: [],
-    id: 0,
+    choice: [{ id: 0, value: 'удали меня', rotation: 90, angle: 180, color: randomColor() }, { id: 1, value: 'ну удали же', rotation: 270, angle: 180, color: randomColor() }],
+    id: 2,
     value: '',
     spin: false,
-    interval: null
+    interval: null,
+    luckyWord: '',
+    result: '',
+    speed: 1,
   }
   handleAdd = (e) => {
     e.preventDefault();
     const len = this.state.choice.length + 1;
     const angle = 360 / len;
     if (this.state.value !== '') {
-      const newItems = [...this.state.choice, { id: this.state.id, value: this.state.value, rotation: null, angle: angle }]
+      const newItems = [...this.state.choice, { id: this.state.id, value: this.state.value, rotation: null, angle: angle, color: randomColor() }]
         .map(item => {
           item.rotation = angle * item.id;
           item.angle = angle;
@@ -46,8 +50,7 @@ export default class App extends Component {
     this.setState({
       choice: newItems,
       id: newId
-    })
-
+    });
   }
   handleChange = (e) => {
     e.preventDefault();
@@ -56,24 +59,33 @@ export default class App extends Component {
     })
   }
   spin = () => {
-    // const item = randomSelect(this.state.choice);
-    // console.log(item);
     const newItems = this.state.choice.map(item => {
-      item.rotation -= 2;
+      item.rotation += 2;
+      if (item.rotation >= 360) {
+        item.rotation = item.rotation % 360;
+      }
+      if (item.rotation < 0) {
+        item.rotation += 360;
+      }
       return item;
     });
-    this.setState({ choice: newItems });
+    const items = this.state.choice;
+    const item = items.filter(item => item.angle >= 360 - item.rotation)[0];
+    const luckyWord = item ? item.value : this.state.luckyWord;
+    this.setState({ choice: newItems, luckyWord: luckyWord, speed: 1 });
   }
-  update = () => {
 
-  }
   btnOnClick = () => {
     if (this.state.interval === null) {
-      this.setState({ interval: setInterval(this.spin, 15) });
+      this.setState({
+        interval: setInterval(this.spin, this.state.speed),
+        spin: true,
+        result: randomSelect(this.state.choice)
+      });
     }
     else {
       clearInterval(this.state.interval);
-      this.setState({ interval: null });
+      this.setState({ interval: null, spin: false });
     }
   }
   render() {
@@ -85,17 +97,18 @@ export default class App extends Component {
       choice: this.state.choice
     }
     return (
-      <div className="App">
+      <Div>
         <Items {...itemsParametres} />
-        <Button onClick={this.btnOnClick}>Spin</Button>
-        <Test>
-          <Spinner list={this.state.choice} />
-        </Test>
-      </div>
+        <Fortuna>
+          <Spinner list={this.state.choice} word={this.state.luckyWord} />
+          <Button onClick={this.btnOnClick}>Spin</Button>
+        </Fortuna>
+      </Div>
     );
   }
 }
-const Test = styled.div`
-    position: absolute;
-    left: 200px;
-    top: 300px;`
+const Fortuna = styled.div`
+    margin: 0 auto;
+    text-align: center;`;
+const Div = styled.div`
+    display: flex;`;
