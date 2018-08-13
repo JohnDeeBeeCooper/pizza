@@ -5,7 +5,6 @@ import Piece from './Piece'
 export default (props) => {
     const width = 1000;
     const height = 520;
-    const angle = 360 / props.list.length;
     const param = {
         x: width - 260,
         y: height / 2,

@@ -88,6 +88,16 @@ export default class App extends Component {
       this.setState({ interval: null, spin: false });
     }
   }
+  renderSpinner() {
+    return (
+      this.state.choice.length > 0 ?
+        <Fortuna>
+          <Spinner list={this.state.choice} word={this.state.luckyWord} />
+          <Button onClick={this.btnOnClick}>Spin</Button>
+        </Fortuna>
+        : null
+    )
+  }
   render() {
     const itemsParametres = {
       value: this.state.value,
@@ -99,10 +109,7 @@ export default class App extends Component {
     return (
       <Div>
         <Items {...itemsParametres} />
-        <Fortuna>
-          <Spinner list={this.state.choice} word={this.state.luckyWord} />
-          <Button onClick={this.btnOnClick}>Spin</Button>
-        </Fortuna>
+        {this.renderSpinner()}
       </Div>
     );
   }
