@@ -1,7 +1,8 @@
 {
   "name": "pizza",
   "version": "0.1.0",
-  "private": true,
+ "homepage": "https://JohnDeeBeeCooper.github.io/pizza/",
+ "private": true,
   "dependencies": {
     "immutability-helper": "^2.7.1",
     "konva": "^2.1.8",
