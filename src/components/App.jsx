@@ -13,7 +13,7 @@ export default class App extends Component {
     spin: false,
     interval: null,
     luckyWord: '',
-    speed: 3,
+    speed: 2,
     timeout: null
   }
   handleAdd = (e) => {
@@ -81,11 +81,15 @@ export default class App extends Component {
     clearTimeout(this.state.timeout);
     this.setState({ interval: null, timeout: null, spin: false });
   }
+  random = () => {
+    const rand = Math.random() * 360;
+    return this.state.speed < 1 ? rand * this.state.speed : rand / this.state.speed;
+  }
   stopSpin = () => {
     clearTimeout(this.state.timeout);
     this.setState({
-      speed: this.state.speed - 0.05,
-      timeout: setTimeout(this.stopSpin, Math.random() * (360 * this.state.speed))
+      speed: this.state.speed - 0.01,
+      timeout: setTimeout(this.stopSpin, this.random())
     });
   }
   btnOnClick = () => {
@@ -93,8 +97,8 @@ export default class App extends Component {
       this.setState({
         interval: setInterval(this.spin, 1),
         spin: true,
-        speed: 3,
-        timeout: setTimeout(this.stopSpin, Math.random() * (360 * this.state.speed))
+        speed: 2,
+        timeout: setTimeout(this.stopSpin, this.random())
       });
     }
   }
