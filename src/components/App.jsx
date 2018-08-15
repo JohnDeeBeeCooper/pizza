@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 import { Items, Button } from './Items';
-import randomSelect from '../functions/random';
 import Spinner from './Spinner'
 import styled from 'styled-components';
 import randomColor from 'randomcolor';
@@ -14,8 +13,8 @@ export default class App extends Component {
     spin: false,
     interval: null,
     luckyWord: '',
-    result: '',
-    speed: 1,
+    speed: 3,
+    timeout: null
   }
   handleAdd = (e) => {
     e.preventDefault();
@@ -59,8 +58,11 @@ export default class App extends Component {
     })
   }
   spin = () => {
+    if (this.state.speed <= 0) {
+      this.result();
+    }
     const newItems = this.state.choice.map(item => {
-      item.rotation += 2;
+      item.rotation += this.state.speed;
       if (item.rotation >= 360) {
         item.rotation = item.rotation % 360;
       }
@@ -72,20 +74,28 @@ export default class App extends Component {
     const items = this.state.choice;
     const item = items.filter(item => item.angle >= 360 - item.rotation)[0];
     const luckyWord = item ? item.value : this.state.luckyWord;
-    this.setState({ choice: newItems, luckyWord: luckyWord, speed: 1 });
+    this.setState({ choice: newItems, luckyWord: luckyWord });
   }
-
+  result = () => {
+    clearInterval(this.state.interval);
+    clearTimeout(this.state.timeout);
+    this.setState({ interval: null, timeout: null, spin: false });
+  }
+  stopSpin = () => {
+    clearTimeout(this.state.timeout);
+    this.setState({
+      speed: this.state.speed - 0.05,
+      timeout: setTimeout(this.stopSpin, Math.random() * (360 * this.state.speed))
+    });
+  }
   btnOnClick = () => {
-    if (this.state.interval === null) {
+    if (this.state.spin === false) {
       this.setState({
-        interval: setInterval(this.spin, this.state.speed),
+        interval: setInterval(this.spin, 1),
         spin: true,
-        result: randomSelect(this.state.choice)
+        speed: 3,
+        timeout: setTimeout(this.stopSpin, Math.random() * (360 * this.state.speed))
       });
-    }
-    else {
-      clearInterval(this.state.interval);
-      this.setState({ interval: null, spin: false });
     }
   }
   renderSpinner() {

@@ -6,7 +6,7 @@ export const Items = (props) => {
         <Select>
             <form onSubmit={props.handleAdd}>
                 <Header>
-                    <Input value={props.value} onChange={props.handleChange} placeholder="хукс" />
+                    <Input value={props.value} onChange={props.handleChange} placeholder="What needs to be rolled" />
                     <Button onClick={props.handleAdd}> Add </Button>
                 </Header>
                 <List>{props.choice.map(item => <Item key={item.id}><Value>{item.value}</Value><Button onClick={props.handleRemove(item.id)}>-</Button></Item>)}</List>
