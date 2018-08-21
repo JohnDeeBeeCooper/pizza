@@ -7,13 +7,13 @@ import randomColor from 'randomcolor';
 
 export default class App extends Component {
   state = {
-    choice: [{ id: 0, value: 'удали меня', rotation: 90, angle: 180, color: randomColor() }, { id: 1, value: 'ну удали же', rotation: 270, angle: 180, color: randomColor() }],
-    id: 2,
+    choice: [],
+    id: 0,
     value: '',
     spin: false,
     interval: null,
     luckyWord: '',
-    speed: 2,
+    speed: 3,
     timeout: null
   }
   handleAdd = (e) => {
@@ -21,12 +21,20 @@ export default class App extends Component {
     const len = this.state.choice.length + 1;
     const angle = 360 / len;
     if (this.state.value !== '') {
-      const newItems = [...this.state.choice, { id: this.state.id, value: this.state.value, rotation: null, angle: angle, color: randomColor() }]
-        .map(item => {
-          item.rotation = angle * item.id;
-          item.angle = angle;
-          return item;
-        });
+      const newItems = [...this.state.choice, {
+        id: this.state.id,
+        value: this.state.value,
+        rotation: null,
+        angle: angle,
+        color: randomColor({
+          luminosity: 'light',
+          hue: 'random'
+        })
+      }].map(item => {
+        item.rotation = angle * item.id;
+        item.angle = angle;
+        return item;
+      });
       this.setState({ choice: newItems, id: this.state.id + 1, value: '' });
     }
   }
@@ -82,13 +90,13 @@ export default class App extends Component {
     this.setState({ interval: null, timeout: null, spin: false });
   }
   random = () => {
-    const rand = Math.random() * 360;
+    const rand = Math.random() * 180;
     return this.state.speed < 1 ? rand * this.state.speed : rand / this.state.speed;
   }
   stopSpin = () => {
     clearTimeout(this.state.timeout);
     this.setState({
-      speed: this.state.speed - 0.01,
+      speed: this.state.speed - 0.015,
       timeout: setTimeout(this.stopSpin, this.random())
     });
   }
@@ -97,7 +105,7 @@ export default class App extends Component {
       this.setState({
         interval: setInterval(this.spin, 1),
         spin: true,
-        speed: 2,
+        speed: 3,
         timeout: setTimeout(this.stopSpin, this.random())
       });
     }

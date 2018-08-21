@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Items = (props) => {
     return (
@@ -7,7 +7,7 @@ export const Items = (props) => {
             <form onSubmit={props.handleAdd}>
                 <Header>
                     <Input value={props.value} onChange={props.handleChange} placeholder="What needs to be rolled" />
-                    <Button onClick={props.handleAdd}> Add </Button>
+                    <Button primary onClick={props.handleAdd}>Add</Button>
                 </Header>
                 <List>{props.choice.map(item => <Item key={item.id}><Value>{item.value}</Value><Button onClick={props.handleRemove(item.id)}>-</Button></Item>)}</List>
             </form>
@@ -15,19 +15,21 @@ export const Items = (props) => {
     )
 }
 const Header = styled.div`
-    margin-top: 20px;`;
+    margin-top: 20px;
+    text-align: center;`;
 
 export const Button = styled.button`
-    background-color:#6F3662;
-    -moz-border-radius:10px;
-    -webkit-border-radius:10px;
-    border-radius:10px;
-    border:none;
-    cursor:pointer;
-    color:#ffffff;
-    font-family:Arial;
-    font-size:18px;
-    padding:8px 20px;
+    background-color:   #6F3662;
+    -moz-border-radius: 10px;
+    -webkit-border-radius:  10px;
+    border-radius:  10px;
+    border: none;
+    display: inline-block;
+    cursor: pointer;
+    color:  #ffffff;
+    font-family: Arial;
+    font-size:  18px;
+    padding: 2px 10px;
     text-decoration:none;
     text-shadow:0px 1px 0px #2f6627;
     :hover{
@@ -36,7 +38,13 @@ export const Button = styled.button`
     :active{
         position:relative;
         top:1px;
-    }`
+    }
+    ${props => props.primary && css`
+    color: white;
+    padding:5px 15px;
+    margin-left: 10px;
+  `}`;
+
 const Input = styled.input`
     border: 1px solid #6F3662;
     border-radius: 3px;
@@ -54,16 +62,26 @@ const Input = styled.input`
         color: #000000;
         border: 1px solid #000000
     }`;
+
 const Select = styled.div`
     margin: 30px;
     border-radius: 12px;
     min-width: 200px;
-    max-width: 550px;
- `;
+    max-width: 550px;`;
+
 const List = styled.ul`
     display: block;`;
+
 const Item = styled.li`
     list-style-type:none;
+    min-width: 200px;
+    max-width: 550px;
     padding: 10px 15px;
-    display: inline-block;`;
-const Value = styled.p``;
+    display: block;`;
+
+const Value = styled.span`
+    font-family: 'Arial' sans-serif;
+    font-weight: 400;
+    font-size: 15pt;
+    min-width: 200px;
+    max-width: 550px;`;
