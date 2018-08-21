@@ -74,8 +74,6 @@ const List = styled.ul`
 
 const Item = styled.li`
     list-style-type:none;
-    min-width: 200px;
-    max-width: 550px;
     padding: 10px 15px;
     display: block;`;
 

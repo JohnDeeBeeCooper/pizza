@@ -1,8 +1,6 @@
 import React from 'react';
 import { Wedge, Text, Group } from 'react-konva';
 
-const deg = (d) => d / 180 * Math.PI;
-
 export default (props) => {
     const param = props.param;
     const x = props.wh.width / 2;
