@@ -9,7 +9,7 @@ export const Items = (props) => {
                     <Input value={props.value} onChange={props.handleChange} placeholder="What needs to be rolled" />
                     <Button primary onClick={props.handleAdd}>Add</Button>
                 </Header>
-                <List>{props.choice.map(item => <Item key={item.id}><Value>{item.value}</Value><Button onClick={props.handleRemove(item.id)}>-</Button></Item>)}</List>
+                <List>{props.choice.map(item => <Item key={item.id}><Value>{item.value}</Value><Button delete onClick={props.handleRemove(item.id)}>-</Button></Item>)}</List>
             </form>
         </Select>
     )
@@ -43,6 +43,9 @@ export const Button = styled.button`
     color: white;
     padding:5px 15px;
     margin-left: 10px;
+  `}
+  ${props => props.delete && css`
+    float: right;
   `}`;
 
 const Input = styled.input`
@@ -75,11 +78,10 @@ const List = styled.ul`
 const Item = styled.li`
     list-style-type:none;
     padding: 10px 15px;
-    display: block;`;
+    display: block;
+    border-bottom:1px solid #e4d8e6;`;
 
 const Value = styled.span`
     font-family: 'Arial' sans-serif;
     font-weight: 400;
-    font-size: 15pt;
-    min-width: 200px;
-    max-width: 550px;`;
+    font-size: 15pt;`;
