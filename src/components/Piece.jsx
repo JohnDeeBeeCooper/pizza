@@ -1,5 +1,5 @@
 import React from 'react';
-import { Wedge, Text, Group } from 'react-konva';
+import { Wedge, Text, Group} from 'react-konva';
 
 export default (props) => {
     const param = props.param;

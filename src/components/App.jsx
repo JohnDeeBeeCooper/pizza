@@ -90,24 +90,26 @@ export default class App extends Component {
     this.setState({ interval: null, timeout: null, spin: false });
   }
   random = () => {
-    const rand = Math.random() * 180;
+    const rand = Math.random() * 180 * this.state.choice.length * Math.random();
     return this.state.speed < 1 ? rand * this.state.speed : rand / this.state.speed;
   }
   stopSpin = () => {
     clearTimeout(this.state.timeout);
     this.setState({
-      speed: this.state.speed - 0.015,
+      speed: this.state.speed - 0.025,
       timeout: setTimeout(this.stopSpin, this.random())
     });
   }
   btnOnClick = () => {
-    if (this.state.spin === false) {
-      this.setState({
-        interval: setInterval(this.spin, 1),
-        spin: true,
-        speed: 3,
-        timeout: setTimeout(this.stopSpin, this.random())
-      });
+    if (this.state.choice.length > 1) {
+      if (this.state.spin === false) {
+        this.setState({
+          interval: setInterval(this.spin, 1),
+          spin: true,
+          speed: 3,
+          timeout: setTimeout(this.stopSpin, this.random())
+        });
+      }
     }
   }
   renderSpinner() {
@@ -126,7 +128,8 @@ export default class App extends Component {
       handleRemove: this.handleRemove,
       handleAdd: this.handleAdd,
       handleChange: this.handleChange,
-      choice: this.state.choice
+      choice: this.state.choice,
+      spin: this.state.spin
     }
     return (
       <Div>

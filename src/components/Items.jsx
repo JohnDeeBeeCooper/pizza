@@ -3,7 +3,8 @@ import styled, { css } from 'styled-components';
 
 export const Items = (props) => {
     return (
-        <Select>
+        <Select isTrue={props.spin}>
+            <Block blocked={props.spin} />
             <form onSubmit={props.handleAdd}>
                 <Header>
                     <Input value={props.value} onChange={props.handleChange} placeholder="What needs to be rolled" />
@@ -17,6 +18,16 @@ export const Items = (props) => {
 const Header = styled.div`
     margin-top: 20px;
     text-align: center;`;
+
+const Block = styled.div`
+    display: none;
+    ${props => props.blocked && css`
+    position: absolute;
+    display: block;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+  `}`;
 
 export const Button = styled.button`
     background-color:   #6F3662;
@@ -70,7 +81,15 @@ const Select = styled.div`
     margin: 30px;
     border-radius: 12px;
     min-width: 200px;
-    max-width: 550px;`;
+    max-width: 550px;
+    ${props => props.isTrue && css`
+    opacity: 0.3;
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+  `}`;
 
 const List = styled.ul`
     display: block;`;
