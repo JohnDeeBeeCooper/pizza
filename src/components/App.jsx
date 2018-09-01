@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './App.css';
 import { Items, Button } from './Items';
 import Spinner from './Spinner'
 import styled from 'styled-components';
@@ -143,4 +142,5 @@ const Fortuna = styled.div`
     margin: 0 auto;
     text-align: center;`;
 const Div = styled.div`
-    display: flex;`;
+    display: flex;
+`;

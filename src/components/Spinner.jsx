@@ -3,10 +3,10 @@ import { Layer, Stage, Wedge, Group, Text } from 'react-konva';
 import Piece from './Piece'
 
 export default (props) => {
-    const width = 1000;
+    const width = 800;
     const height = 520;
     const param = {
-        x: width - 260,
+        x: width - 165,
         y: height / 2,
         rotation: 330,
         radius: 30,
@@ -16,7 +16,7 @@ export default (props) => {
         strokeWidth: 4
     }
     const textParametres = {
-        x: width - 225,
+        x: width - 120,
         y: height / 2 - 15,
         text: props.word,
         fontFamily: 'Arial',

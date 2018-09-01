@@ -23,18 +23,17 @@ const Block = styled.div`
     display: none;
     ${props => props.blocked && css`
     position: absolute;
+    width: 50%;
+    height: 90%;
     display: block;
     z-index: 1;
-    width: 100%;
-    height: 100%;
   `}`;
 
 export const Button = styled.button`
     background-color:   #6F3662;
-    -moz-border-radius: 10px;
-    -webkit-border-radius:  10px;
     border-radius:  10px;
     border: none;
+    outline: none;
     display: inline-block;
     cursor: pointer;
     color:  #ffffff;
@@ -61,14 +60,12 @@ export const Button = styled.button`
 
 const Input = styled.input`
     border: 1px solid #6F3662;
-    border-radius: 3px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    -khtml-border-radius: 3px;
+    border-radius: 10px;
     background: #F8F8F2 !important;
     outline: none;
     height: 25px;
-    width: 400px; 
+    min-width: 300px;
+    max-width: 600px; 
     color: #cccccc;
     font-size: 15pt;
     font-family: Tahoma;
@@ -84,15 +81,11 @@ const Select = styled.div`
     max-width: 550px;
     ${props => props.isTrue && css`
     opacity: 0.3;
-    user-select: none;
-    -moz-user-select: none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    -o-user-select: none;
   `}`;
 
 const List = styled.ul`
-    display: block;`;
+    padding: 0;
+`;
 
 const Item = styled.li`
     list-style-type:none;
