@@ -23,31 +23,33 @@ const Block = styled.div`
     display: none;
     ${props => props.blocked && css`
     position: absolute;
-    width: 50%;
-    height: 90%;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
     display: block;
-    z-index: 1;
   `}`;
 
 export const Button = styled.button`
-    background-color:   #6F3662;
-    border-radius:  10px;
+    background-color: #6F3662;
+    border-radius: 10px;
     border: none;
     outline: none;
     display: inline-block;
     cursor: pointer;
     color:  #ffffff;
     font-family: Arial;
-    font-size:  18px;
+    font-size: 18px;
     padding: 2px 10px;
-    text-decoration:none;
-    text-shadow:0px 1px 0px #2f6627;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #2f6627;
     :hover{
         background-color:#90487F;
     }
     :active{
-        position:relative;
-        top:1px;
+        position: relative;
+        top: 1px;
     }
     ${props => props.primary && css`
     color: white;
@@ -59,6 +61,7 @@ export const Button = styled.button`
   `}`;
 
 const Input = styled.input`
+    padding: 10px;
     border: 1px solid #6F3662;
     border-radius: 10px;
     background: #F8F8F2 !important;
@@ -68,7 +71,7 @@ const Input = styled.input`
     max-width: 600px; 
     color: #cccccc;
     font-size: 15pt;
-    font-family: Tahoma;
+    font-family: 'Arial';
     &:focus{
         color: #000000;
         border: 1px solid #000000
@@ -79,19 +82,21 @@ const Select = styled.div`
     border-radius: 12px;
     min-width: 200px;
     max-width: 550px;
+    display: flex;
     ${props => props.isTrue && css`
     opacity: 0.3;
   `}`;
 
 const List = styled.ul`
     padding: 0;
+    font-family: 'Arial';
 `;
 
 const Item = styled.li`
-    list-style-type:none;
+    list-style-type: none;
     padding: 10px 15px;
     display: block;
-    border-bottom:1px solid #e4d8e6;`;
+    border-bottom: 1px solid #e4d8e6;`;
 
 const Value = styled.span`
     font-family: 'Arial' sans-serif;
