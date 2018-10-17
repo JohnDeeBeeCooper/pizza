@@ -22,7 +22,7 @@ export default class App extends Component {
     if (this.state.value !== '') {
       const newItems = [...this.state.choice, {
         id: this.state.id,
-        value: this.state.value,
+        value: this.state.value.trim(),
         rotation: null,
         angle: angle,
         color: randomColor({
@@ -143,4 +143,8 @@ const Fortuna = styled.div`
     text-align: center;`;
 const Div = styled.div`
     display: flex;
+    margin: 0 auto;
+    @media(max-width: 450px){
+      flex-direction: column;
+    }
 `;

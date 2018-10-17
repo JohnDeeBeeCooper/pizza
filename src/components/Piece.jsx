@@ -1,11 +1,12 @@
 import React from 'react';
 import { Wedge, Text, Group} from 'react-konva';
+import textCut from '../utils/textCut';
 
 export default (props) => {
     const param = props.param;
     const x = props.wh.width / 2;
     const y = props.wh.height / 2;
-    const radius = 250;
+    const radius = props.wh.radius;
 
     const wedgeParametres = {
         x: x,
@@ -14,7 +15,7 @@ export default (props) => {
         angle: param.angle,
         fill: param.color,
         stroke: 'black',
-        strokeWidth: 5,
+        strokeWidth: props.wh.strokeWidth,
         rotation: param.rotation,
     }
     const textLength = param.value.length * 0.75;
@@ -22,11 +23,11 @@ export default (props) => {
         x: x,
         y: y,
         offsetX: -(radius / 3) + textLength,
-        offsetY: 10,
+        offsetY: props.wh.offsetY,
         rotation: param.rotation + param.angle / 2,
-        text: param.value,
+        text: textCut(param.value),
         fontFamily: 'Arial',
-        fontSize: 18,
+        fontSize: props.wh.fontSize,
         fontWeight: 400
     }
     return (

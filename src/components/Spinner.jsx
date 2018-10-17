@@ -1,50 +1,62 @@
 import React from 'react';
 import { Layer, Stage, Wedge, Group, Text, Circle } from 'react-konva';
 import Piece from './Piece'
+import getParametres from '../utils/getParametres';
+import textCut from '../utils/textCut';
 
 export default (props) => {
-    const width = 800;
-    const height = 520;
-    const param = {
-        x: width - 165,
-        y: height / 2,
+    const { width,
+        height,
+        radius,
+        fontSize,
+        strokeWidth,
+        arrowRadius,
+        arrowStroke,
+        capText,
+        x,
+        y,
+        offsetY} = getParametres();
+
+    const arrowParametres = {
+        x,
+        y,
         rotation: 330,
-        radius: 30,
+        radius: arrowRadius,
         angle: 60,
         fill: '#BC5506',
         stroke: '#7F4F2A',
-        strokeWidth: 4
+        strokeWidth: arrowStroke
     }
     const textParametres = {
-        x: width - 120,
-        y: height / 2 - 15,
-        text: props.word,
+        x: width - 130,
+        y: height / 2 - 10,
+        text: textCut(props.word),
         fontFamily: 'Arial',
-        fontSize: 30
+        fontSize
     }
     const item = props.list[0];
     const circleParametres = {
         x: width / 2,
         y: height / 2,
-        radius: 250,
+        radius,
         fill: item.color,
         stroke: 'black',
-        strokeWidth: 5,
+        strokeWidth
     }
     const circleText = {
         x: width / 2,
         y: height / 2,
-        text: item.value,
+        text: textCut(item.value),
         fontFamily: 'Arial',
-        fontSize: 18,
+        fontSize,
         fontWeight: 400
     }
     return (
         <Stage width={width} height={height}>
             <Layer>
                 <Group>
-                    {props.list.length !== 1 ? props.list.map(item => <Piece key={item.id} wh={{ width: width, height: height }} param={item} />) : <Group><Circle {...circleParametres} /><Text {...circleText} /></Group>}
-                    <Wedge {...param} /><Text {...textParametres} />
+                    {props.list.length !== 1 ? props.list.map(item => <Piece key={item.id} wh={{ width, height, radius, fontSize, strokeWidth, offsetY}} param={item} />) : <Group><Circle {...circleParametres} /><Text {...circleText} /></Group>}
+                    <Wedge {...arrowParametres} />{capText ? <Text {...textParametres} /> : null}
                 </Group>
             </Layer>
         </Stage>

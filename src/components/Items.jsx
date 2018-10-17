@@ -16,8 +16,14 @@ export const Items = (props) => {
     )
 }
 const Header = styled.div`
+    display: flex;
+    flex-direction: row;
     margin-top: 20px;
-    text-align: center;`;
+    text-align: center;
+    @media (max-width: 450px) {
+        flex-direction: column;
+        align-items: flex-start; 
+      }`;
 
 const Block = styled.div`
     display: none;
@@ -53,15 +59,19 @@ export const Button = styled.button`
     }
     ${props => props.primary && css`
     color: white;
-    padding:5px 15px;
+    padding: 5px 15px;
     margin-left: 10px;
+    @media (max-width: 450px){
+        margin: 0 auto;
+        margin-top: 5px;
+    }
   `}
   ${props => props.delete && css`
     float: right;
   `}`;
 
 const Input = styled.input`
-    padding: 10px;
+    padding: 7px;
     border: 1px solid #6F3662;
     border-radius: 10px;
     background: #F8F8F2 !important;
@@ -83,6 +93,10 @@ const Select = styled.div`
     min-width: 200px;
     max-width: 550px;
     display: flex;
+    @media (max-width: 450px){
+        margin: 0 auto;
+        max-width: 400px;
+    }
     ${props => props.isTrue && css`
     opacity: 0.3;
   `}`;
