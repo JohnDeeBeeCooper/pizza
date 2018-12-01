@@ -1,0 +1,11 @@
+{
+  "main.js": "/pizza/static/js/main.036b780e.chunk.js",
+  "main.js.map": "/pizza/static/js/main.036b780e.chunk.js.map",
+  "static/js/1.b73146cf.chunk.js": "/pizza/static/js/1.b73146cf.chunk.js",
+  "static/js/1.b73146cf.chunk.js.map": "/pizza/static/js/1.b73146cf.chunk.js.map",
+  "runtime~main.js": "/pizza/static/js/runtime~main.24d64a73.js",
+  "runtime~main.js.map": "/pizza/static/js/runtime~main.24d64a73.js.map",
+  "index.html": "/pizza/index.html",
+  "precache-manifest.2e74a749f342f4386eff0b491538b557.js": "/pizza/precache-manifest.2e74a749f342f4386eff0b491538b557.js",
+  "service-worker.js": "/pizza/service-worker.js"
+}
