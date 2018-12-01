@@ -85,7 +85,7 @@ export default class App extends Component {
   }
   result = () => {
     clearInterval(this.state.interval);
-    clearTimeout(this.state.timeout);
+    //clearTimeout(this.state.timeout);
     this.setState({ interval: null, timeout: null, spin: false });
   }
   random = () => {
@@ -95,7 +95,7 @@ export default class App extends Component {
   stopSpin = () => {
     clearTimeout(this.state.timeout);
     this.setState({
-      speed: this.state.speed - 0.025,
+      speed: this.state.speed - 0.030,
       timeout: setTimeout(this.stopSpin, this.random())
     });
   }
@@ -106,7 +106,7 @@ export default class App extends Component {
           interval: setInterval(this.spin, 1),
           spin: true,
           speed: 3,
-          timeout: setTimeout(this.stopSpin, this.random())
+          timeout: setTimeout(this.stopSpin, this.random()),
         });
       }
     }

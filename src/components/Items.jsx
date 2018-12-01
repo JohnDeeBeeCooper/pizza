@@ -38,7 +38,7 @@ const Block = styled.div`
   `}`;
 
 export const Button = styled.button`
-    background-color: #6F3662;
+    background-color: #6F3665;
     border-radius: 10px;
     border: none;
     outline: none;
