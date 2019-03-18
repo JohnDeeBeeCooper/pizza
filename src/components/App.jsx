@@ -3,6 +3,7 @@ import { Items, Button } from './Items';
 import Spinner from './Spinner'
 import styled from 'styled-components';
 import randomColor from 'randomcolor';
+import update from 'immutability-helper';
 
 export default class App extends Component {
   state = {
@@ -17,40 +18,43 @@ export default class App extends Component {
   }
   handleAdd = (e) => {
     e.preventDefault();
-    const len = this.state.choice.length + 1;
-    const angle = 360 / len;
-    if (this.state.value !== '') {
-      const newItems = [...this.state.choice, {
-        id: this.state.id,
-        value: this.state.value.trim(),
+    const { choice, value, id } = this.state;
+    const len = choice.length + 1;
+    const itemAngle = 360 / len;
+    if (value !== '') {
+      const newItems = [...choice, {
+        id: id,
+        value: value.trim(),
         rotation: null,
-        angle: angle,
+        angle: itemAngle,
         color: randomColor({
           luminosity: 'light',
           hue: 'random'
         })
       }].map(item => {
-        item.rotation = angle * item.id;
-        item.angle = angle;
-        return item;
+        const { id } = item;
+        const newItem = update(item, { rotation: { $set: itemAngle * id }, angle: { $set: itemAngle } });
+        return newItem;
       });
-      this.setState({ choice: newItems, id: this.state.id + 1, value: '' });
+      this.setState(state => {
+        return { choice: newItems, id: state.id + 1, value: '' };
+      });
     }
   }
-  handleRemove = (id) => (e) => {
+  handleRemove = (itemId) => (e) => {
     e.preventDefault();
     const items = this.state.choice;
-    const len = this.state.choice.length - 1;
-    const angle = len === 0 ? 0 : 360 / len;
+    const len = items.length - 1;
+    const itemAngle = len === 0 ? 0 : 360 / len;
     const newItems = items
-      .filter(item => item.id !== id)
+      .filter(item => item.id !== itemId)
       .map(item => {
-        if (item.id > id) {
-          item.id--;
-        }
-        item.rotation = item.id * angle;
-        item.angle = angle;
-        return item;
+        const { id } = item;
+        // if (id > itemId) {
+        //   item.id = update(id, { $set: id - 1 });
+        // }
+        const newItem = update(item, { rotation: { $set: id * itemAngle }, angle: { $set: itemAngle }, id: { $set: id > itemId ? id - 1 : id } });
+        return newItem;
       });
     const newId = newItems.length > 0 ? newItems[newItems.length - 1].id + 1 : 0;
     this.setState({
@@ -68,40 +72,45 @@ export default class App extends Component {
     if (this.state.speed <= 0) {
       this.result();
     }
-    const newItems = this.state.choice.map(item => {
-      item.rotation += this.state.speed;
-      if (item.rotation >= 360) {
-        item.rotation = item.rotation % 360;
+    const { speed, choice } = this.state;
+    const newItems = choice.map(item => {
+      const { rotation } = item;
+      let nextRotate = rotation + speed;
+      if (nextRotate >= 360) {
+        nextRotate %= 360;
       }
-      if (item.rotation < 0) {
-        item.rotation += 360;
+      if (nextRotate < 0) {
+        nextRotate += 360;
       }
-      return item;
+      const newItem = update(item, { rotation: { $set: nextRotate } });
+      return newItem;
     });
-    const items = this.state.choice;
-    const item = items.filter(item => item.angle >= 360 - item.rotation)[0];
+    const item = choice.filter(item => item.angle >= 360 - item.rotation)[0];
     const luckyWord = item ? item.value : this.state.luckyWord;
     this.setState({ choice: newItems, luckyWord: luckyWord });
   }
   result = () => {
     clearInterval(this.state.interval);
-    //clearTimeout(this.state.timeout);
     this.setState({ interval: null, timeout: null, spin: false });
   }
   random = () => {
-    const rand = Math.random() * 180 * this.state.choice.length * Math.random();
-    return this.state.speed < 1 ? rand * this.state.speed : rand / this.state.speed;
+    const { speed, choice } = this.state;
+    const rand = Math.random() * 180 * choice.length * Math.random();
+    return speed < 1 ? rand * speed : rand / speed;
   }
   stopSpin = () => {
     clearTimeout(this.state.timeout);
-    this.setState({
-      speed: this.state.speed - 0.030,
-      timeout: setTimeout(this.stopSpin, this.random())
+    this.setState(state => {
+      return {
+        speed: state.speed - 0.030,
+        timeout: setTimeout(this.stopSpin, this.random())
+      };
     });
   }
   btnOnClick = () => {
-    if (this.state.choice.length > 1) {
-      if (this.state.spin === false) {
+    const { choice, spin } = this.state;
+    if (choice.length > 1) {
+      if (spin === false) {
         this.setState({
           interval: setInterval(this.spin, 1),
           spin: true,
@@ -112,15 +121,17 @@ export default class App extends Component {
     }
   }
   renderSpinner() {
+    const choice = this.state.choice;
     return (
-      this.state.choice.length > 0 ?
+      choice.length > 0 ?
         <Fortuna>
-          <Spinner list={this.state.choice} word={this.state.luckyWord} />
+          <Spinner list={choice} word={this.state.luckyWord} />
           <Button onClick={this.btnOnClick}>Spin</Button>
         </Fortuna>
         : null
     )
   }
+
   render() {
     const itemsParametres = {
       value: this.state.value,
@@ -128,7 +139,7 @@ export default class App extends Component {
       handleAdd: this.handleAdd,
       handleChange: this.handleChange,
       choice: this.state.choice,
-      spin: this.state.spin
+      spin: this.state.spin,
     }
     return (
       <Div>

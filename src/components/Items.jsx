@@ -1,19 +1,28 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 
-export const Items = (props) => {
-    return (
-        <Select isTrue={props.spin}>
-            <Block blocked={props.spin} />
-            <form onSubmit={props.handleAdd}>
-                <Header>
-                    <Input value={props.value} onChange={props.handleChange} placeholder="What needs to be rolled" />
-                    <Button primary onClick={props.handleAdd}>Add</Button>
-                </Header>
-                <List>{props.choice.map(item => <Item key={item.id}><Value>{item.value}</Value><Button delete onClick={props.handleRemove(item.id)}>-</Button></Item>)}</List>
-            </form>
-        </Select>
-    )
+export class Items extends Component {
+    shouldComponentUpdate(nextProps) {
+        if (this.props.spin) {
+            return false;
+        }
+        return true;
+    }
+    render() {
+        const props = this.props;
+        return (
+            <Select isTrue={props.spin}>
+                <Block blocked={props.spin} />
+                <form onSubmit={props.handleAdd}>
+                    <Header>
+                        <Input value={props.value} onChange={props.handleChange} placeholder="What needs to be rolled" />
+                        <Button primary onClick={props.handleAdd}>Add</Button>
+                    </Header>
+                    <List>{props.choice.map(item => <Item key={item.id}><Value>{item.value}</Value><Button delete onClick={props.handleRemove(item.id)}>-</Button></Item>)}</List>
+                </form>
+            </Select>
+        )
+    }
 }
 const Header = styled.div`
     display: flex;
